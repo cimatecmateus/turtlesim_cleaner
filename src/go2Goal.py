@@ -17,7 +17,7 @@ class turtle():
         #Instance of class Pose
         self.pose = Pose()
         #Define frequency loop to 10Hz
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(55)
     
     #Callback function to read data from /turtle1/Pose topic
     def callback(self, data):
