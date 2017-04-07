@@ -38,6 +38,7 @@ class turtle():
     
     #Function to receiver the data from user input
     def userInput(self):
+        #Old point of user
         self.old_pose_y = self.user_pose.y
         #User inputs
         self.user_pose.x = input("Set your x goal: ")
@@ -77,10 +78,11 @@ class turtle():
         t0 = rospy.Time.now().to_sec()
         current_angle = 0
 
+        #Rotate to direction desired
         while(abs(current_angle) < angle):
             self.velocity_publisher.publish(self.vel_msg)
             t1 = rospy.Time.now().to_sec()
-            current_angle = angular_speed*(t1-t0)
+            current_angle = angular_speed * (t1 - t0)
             self.rate.sleep()
 
         #Forcing the turtle to stop
@@ -91,7 +93,7 @@ class turtle():
         while math.sqrt(math.pow((self.user_pose.x - self.pose.x), 2) + math.pow((self.user_pose.y - self.pose.y), 2)) >= self.distance_tolerance:
 
             #Porportional Controller linear velocity in the x-axis:
-            self.vel_msg.linear.x = 2 * math.sqrt(math.pow((self.user_pose.x - self.pose.x), 2) + math.pow((self.user_pose.y - self.pose.y), 2))
+            self.vel_msg.linear.x = 1.5 * math.sqrt(math.pow((self.user_pose.x - self.pose.x), 2) + math.pow((self.user_pose.y - self.pose.y), 2))
             self.vel_msg.linear.y = 0
             self.vel_msg.linear.z = 0
 
@@ -108,7 +110,7 @@ class turtle():
         ref_vector = np.array([1,0])
         response = "yes"
         while response == "yes":
-            os.system('clear')
+            os.system("clear")
             #Take the parameters os user
             self.userInput()
             #Vector that point to direction
@@ -119,17 +121,18 @@ class turtle():
             self.move2point()
             #Change the vector direction
             ref_vector = dir_vector
-            print 'Move to new point? yes or not?'
+            print "\nMove to new point? yes or not?"
             response = raw_input("Response: ")
-        print "Please, press crtl+c to exit"
+        print "\nPlease, press crtl+c to exit"
         rospy.spin()
 
 
 if __name__ == '__main__':
     try:
-        #Testing our function
-        x = turtle()
-        x.run()
+        #Instance of turtle
+        indigo = turtle()
+        #Run movement
+        indigo.run()
 
     except rospy.ROSInterruptException: pass
 
