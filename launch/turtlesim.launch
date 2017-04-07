@@ -1,0 +1,21 @@
+<launch>
+    <node 
+        pkg="turtlesim" 
+        type="turtlesim_node"
+        name="turtlesim"
+        respawn="true"
+    />
+    <node 
+        pkg="turtlesim_cleaner" 
+        type="go2Goal.py"
+        name="move_to_goal"
+        required="true"
+        launch-prefix="xterm -e"
+    />
+    <node 
+        pkg="turtlesim_cleaner" 
+        type="poseSubscriber.py"
+        name="poser_subscriber"
+        output="screen"
+    />
+</launch>
