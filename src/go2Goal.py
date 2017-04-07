@@ -26,9 +26,8 @@ class turtle():
         self.user_pose = Pose()
         self.user_pose.x = self.pose.x
         self.user_pose.y = self.pose.y
-        print self.user_pose
         #Define frequency loop to 65Hz
-        self.rate = rospy.Rate(65)
+        self.rate = rospy.Rate(100)
     
     #Callback function to read data from /turtle1/Pose topic
     def callback(self, data):
@@ -38,12 +37,23 @@ class turtle():
     
     #Function to receiver the data from user input
     def userInput(self):
+        os.system("clear")
         #Old point of user
         self.old_pose_y = self.user_pose.y
-        #User inputs
-        self.user_pose.x = input("Set your x goal: ")
-        self.user_pose.y = input("Set your y goal: ")
-        self.distance_tolerance = input("Set your tolerance: ")
+        valid_point = False
+        while valid_point == False:
+            #User inputs
+            self.user_pose.x = input("Set your x goal: ")
+            self.user_pose.y = input("Set your y goal: ")
+            #If user point invalid
+            if (self.user_pose.x < 0 or self.user_pose.x > 10 or self.user_pose.y < 0 or self.user_pose.y > 10):
+                valid_point = False
+                print "\nInvalid point!"
+                print "Please, insert a valid point\n"
+            else:
+                valid_point = True
+                self.distance_tolerance = input("Set your tolerance: ")
+
 
     def rotate(self, ref_vector, comp_vector):
         #Calculates scalar product
@@ -110,7 +120,6 @@ class turtle():
         ref_vector = np.array([1,0])
         response = "yes"
         while response == "yes":
-            os.system("clear")
             #Take the parameters os user
             self.userInput()
             #Vector that point to direction
