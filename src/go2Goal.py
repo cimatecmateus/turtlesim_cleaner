@@ -87,9 +87,9 @@ class turtle():
                 angular_speed = (angular_vel * 2 * math.pi) / 360
 
         #We wont use linear components
-        self.vel_msg.linear.x=0
-        self.vel_msg.linear.y=0
-        self.vel_msg.linear.z=0
+        self.vel_msg.linear.x = 0
+        self.vel_msg.linear.y = 0
+        self.vel_msg.linear.z = 0
         self.vel_msg.angular.x = 0
         self.vel_msg.angular.y = 0
         #Set the angular velocity
