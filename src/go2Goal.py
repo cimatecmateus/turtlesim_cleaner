@@ -69,12 +69,22 @@ class turtle():
         #Angular velocity at degrees per second
         angular_vel = 40
 
-        #if y of user point above the actual point, rotate in the counterclockwise direction
-        if(self.user_pose.y >= self.old_pose_y):
-            angular_speed = (angular_vel * 2 * math.pi) / 360
-        #Else, rotate in the clockwise direction
+        #If turtle direction point to right
+        if(math.fabs(self.pose.theta) <= (math.pi/2) or math.fabs(self.pose.theta) >= (3*math.pi/2)):
+            #if y of user point above the actual point, rotate in the counterclockwise direction
+            if(self.user_pose.y >= self.old_pose_y):
+                angular_speed = (angular_vel * 2 * math.pi) / 360
+            #Else, rotate in the clockwise direction
+            else:
+                angular_speed = -(angular_vel * 2 * math.pi) / 360
+        #If turtle direction point to left
         else:
-            angular_speed = -(angular_vel * 2 * math.pi) / 360
+            #if y of user point above the actual point, rotate in the clockwise direction
+            if(self.user_pose.y > self.old_pose_y):
+                angular_speed = -(angular_vel * 2 * math.pi) / 360
+            #Else, rotate in the counterclockwise direction
+            else:
+                angular_speed = (angular_vel * 2 * math.pi) / 360
 
         #We wont use linear components
         self.vel_msg.linear.x=0
